@@ -39,7 +39,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
         http.
                 authorizeHttpRequests(req->
-                        req.requestMatchers("/api/register", "/api/login")
+                        req.requestMatchers("/api/register", "/api/login","/api/auth/forgot-password", "/api/auth/reset-password")
                                 .permitAll());
         http.authorizeHttpRequests(req->req.anyRequest().authenticated());
         http.sessionManagement(session -> session.configure(http));

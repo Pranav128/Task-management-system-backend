@@ -11,12 +11,12 @@ public class TaskRequest {
     private Long createdById;
     @NotNull(message = "Assignee ID's are required")
     private List<Long> assigneeIds;
-    private String comments;
+    private String[] comments;
 
     public TaskRequest() {
     }
 
-    public TaskRequest(CreateTaskRequest createTaskRequest, Long createdById, List<Long> assigneeIds, String comments) {
+    public TaskRequest(CreateTaskRequest createTaskRequest, Long createdById, List<Long> assigneeIds, String[] comments) {
         this.createTaskRequest = createTaskRequest;
         this.createdById = createdById;
         this.assigneeIds = assigneeIds;
@@ -27,11 +27,11 @@ public class TaskRequest {
         return createTaskRequest;
     }
 
-    public String getComments() {
+    public String[] getComments() {
         return comments;
     }
 
-    public void setComments(String comments) {
+    public void setComments(String comments[]) {
         this.comments = comments;
     }
 

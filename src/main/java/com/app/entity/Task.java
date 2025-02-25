@@ -8,7 +8,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "tasks")
@@ -53,17 +55,29 @@ public class Task {
             name = "task_assignees", // Join table name
             joinColumns = @JoinColumn(name = "task_id"), // Foreign key for Task
             inverseJoinColumns = @JoinColumn(name = "user_id") // Foreign key for User
+
     )
     private List<User> assignees; // Multiple assignees for a task
 
-    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Attachment> attachments;
 
-    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<Notification> notifications = new LinkedHashSet<>();
 
 
     public Task() {
+    }
+
+    public Set<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(Set<Notification> notifications) {
+        this.notifications = notifications;
     }
 
     public List<Attachment> getAttachments() {

@@ -15,12 +15,12 @@ public class TaskResponse {
     private LocalDateTime dueDate;
     private String createdBy; // Username of the user who created the task
     private List<String> assignees;  // Username of the user to whom the task is assigned
-    private List<String> comments; // List of comments for the task
+    private List<CommentResponse> comments; // List of comments for the task
 
     public TaskResponse() {
     }
 
-    public TaskResponse(Long id, String title, String description, String priority, String status, LocalDateTime dueDate, String createdBy, List<String> assignees, List<String> comments) {
+    public TaskResponse(Long id, String title, String description, String priority, String status, LocalDateTime dueDate, String createdBy, List<String> assignees, List<CommentResponse> comments) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -96,11 +96,11 @@ public class TaskResponse {
         this.assignees = assignees;
     }
 
-    public List<String> getComments() {
+    public List<CommentResponse> getComments() {
         return comments;
     }
 
-    public void setComments(List<String> comments) {
+    public void setComments(List<CommentResponse> comments) {
         this.comments = comments;
     }
 }

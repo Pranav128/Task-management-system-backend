@@ -16,7 +16,7 @@ public class TaskExceptionHandler {
         ExceptionResponse response=new ExceptionResponse();
         response.setException(ex.toString());
         response.setMessage(ex.getMessage());
-        response.setStatusCode(0);
+        response.setStatusCode(450);
         return new  ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
@@ -25,7 +25,7 @@ public class TaskExceptionHandler {
         ExceptionResponse response=new ExceptionResponse();
         response.setException(ex.toString());
         response.setMessage(ex.getMessage());
-        response.setStatusCode(0);
+        response.setStatusCode(450);
         return new  ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 

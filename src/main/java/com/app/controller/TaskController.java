@@ -2,12 +2,12 @@ package com.app.controller;
 
 import com.app.payload.request.TaskRequest;
 import com.app.payload.request.UpdateTaskRequest;
+import com.app.payload.response.Response;
 import com.app.payload.response.TaskResponse;
 import com.app.service.TaskService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,28 +23,10 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-//    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public ResponseEntity<TaskResponse> createTask(
-//            @RequestPart("createTaskRequest") CreateTaskRequest createTaskRequest,
-//            @RequestPart("createdById") Long createdById,
-//            @RequestPart("assigneeIds") List<Long> assigneeIds,
-//            @RequestPart(value = "comments", required = false) String comments,
-//            @RequestPart(value = "attachments", required = false) MultipartFile[] attachments) {
-//
-//        TaskResponse task = taskService.createTask(
-//                createTaskRequest,
-//                createdById,
-//                assigneeIds,
-//                comments,
-//                attachments
-//        );
-//        return ResponseEntity.ok(task);
-//    }
-
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.ALL_VALUE)
     public ResponseEntity<TaskResponse> createTask(
             @ModelAttribute TaskRequest taskRequest,
-            @RequestPart("attachments") List<MultipartFile> attachments
+            @RequestPart(value = "attachments", required = false) List<MultipartFile> attachments
     ) {
         // Call the service method
         TaskResponse task = taskService.createTask(
@@ -60,7 +42,7 @@ public class TaskController {
     @GetMapping
     public ResponseEntity<Page<TaskResponse>> getAllTasks(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "12") int size,
             @RequestParam(defaultValue = "dueDate,asc") String sort) {
         Page<TaskResponse> tasks = taskService.getAllTasks(page, size, sort);
         return ResponseEntity.ok(tasks);
@@ -72,17 +54,30 @@ public class TaskController {
         return ResponseEntity.ok(task);
     }
 
+
+    // ✅ Fetch paginated tasks assigned to a user
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Page<TaskResponse>> getTasksByUserId(
+            @PathVariable Long userId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "12") int size,
+            @RequestParam(defaultValue = "dueDate,asc") String sort
+    ) {
+        Page<TaskResponse> tasks = taskService.getTasksByUserId(userId, page, size, sort);
+        return ResponseEntity.ok(tasks);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<TaskResponse> updateTask(@PathVariable Long id, @RequestBody UpdateTaskRequest request) {
         TaskResponse task = taskService.updateTask(id, request);
         return ResponseEntity.ok(task);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+    public ResponseEntity<Response> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(new Response("Task Deleted Successfully"));
     }
 
     @GetMapping("/search")
@@ -98,13 +93,5 @@ public class TaskController {
 //    public ResponseEntity<Void> notifyAssignee(@PathVariable Long taskId) {
 //        notificationService.notifyAssignee(taskId);
 //        return ResponseEntity.ok().build();
-//    }
-//
-//    @PostMapping("/{taskId}/attachments")
-//    public ResponseEntity<AttachmentResponse> uploadAttachment(
-//            @PathVariable Long taskId,
-//            @RequestParam("file") MultipartFile file) {
-//        AttachmentResponse attachment = attachmentService.uploadAttachment(taskId, file);
-//        return ResponseEntity.ok(attachment);
 //    }
 }
