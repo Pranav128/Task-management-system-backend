@@ -31,4 +31,10 @@ public class NotificationController {
         NotificationResponse notification = notificationService.markAsRead(notificationId);
         return ResponseEntity.ok(notification);
     }
+
+    @GetMapping("/{taskId}")
+    public ResponseEntity<List<NotificationResponse>> getNotificationsByTaskId(@PathVariable Long taskId){
+        List<NotificationResponse> notifications = notificationService.getNotificationByTask(taskId);
+        return ResponseEntity.ok(notifications);
+    }
 }

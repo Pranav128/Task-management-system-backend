@@ -23,8 +23,7 @@ public class CommentController {
     public ResponseEntity<CommentResponse> addComment(
             @PathVariable Long taskId,
             @RequestBody CreateCommentRequest request) {
-        request.setTaskId(taskId); // Set the task ID from the path variable
-        CommentResponse comment = commentService.addComment(request);
+        CommentResponse comment = commentService.addComment(request,taskId);
         return ResponseEntity.ok(comment);
     }
 

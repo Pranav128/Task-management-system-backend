@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -69,12 +71,40 @@ public class AttachmentService {
     public byte[] downloadAttachment(Long attachmentId) {
         Attachment attachment = attachmentRepository.findById(attachmentId)
                 .orElseThrow(() -> new TaskException("Attachment not found"));
-
         try {
             Path filePath = Paths.get(attachment.getFilePath());
             return Files.readAllBytes(filePath);
         } catch (IOException e) {
             throw new TaskException("Failed to read file: " + e.getMessage());
         }
+    }
+
+    public List<Attachment> findAll(Long taskId) {
+        Optional<Task> t=taskRepository.findById(taskId);
+        if(t.isEmpty()){
+            throw new TaskException("No task found");
+        }
+        Task task=t.get();
+        if(task.getAttachments() == null){
+            throw new TaskException("No attachments found");
+        }
+        return task.getAttachments();
+    }
+
+    public void deleteAttachment(Long attachmentId) {
+        // ✅ Find attachment by ID
+        Attachment attachment = attachmentRepository.findById(attachmentId)
+                .orElseThrow(() -> new TaskException("Attachment not found"));
+
+        try {
+            // ✅ Delete file from storage
+            Path filePath = Paths.get(attachment.getFilePath());
+            Files.deleteIfExists(filePath);
+        } catch (IOException e) {
+            throw new TaskException("Failed to delete file: " + e.getMessage());
+        }
+
+        // ✅ Remove attachment from the database
+        attachmentRepository.delete(attachment);
     }
 }

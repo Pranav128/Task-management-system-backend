@@ -28,9 +28,9 @@ public class CommentService {
     }
 
     // Add a comment to a task
-    public CommentResponse addComment(CreateCommentRequest request) {
+    public CommentResponse addComment(CreateCommentRequest request,Long taskId) {
         // Fetch the task
-        Task task = taskRepository.findById(request.getTaskId())
+        Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new TaskException("Task not found"));
 
         // Fetch the user
@@ -68,4 +68,3 @@ public class CommentService {
         );
     }
 }
-

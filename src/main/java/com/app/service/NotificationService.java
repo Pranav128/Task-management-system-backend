@@ -1,9 +1,9 @@
 package com.app.service;
 
-
 import com.app.entity.Notification;
 import com.app.entity.Task;
 import com.app.entity.User;
+import com.app.exception.custom.TaskException;
 import com.app.payload.response.NotificationResponse;
 import com.app.repository.NotificationRepository;
 import com.app.repository.TaskRepository;
@@ -11,6 +11,8 @@ import com.app.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,6 +59,17 @@ public class NotificationService {
         notification.setRead(true);
         Notification updatedNotification = notificationRepository.save(notification);
         return mapToNotificationResponse(updatedNotification);
+    }
+
+    public List<NotificationResponse> getNotificationByTask(Long taskId){
+        Optional<Task> t = taskRepository.findById(taskId);
+        if(t.isEmpty()){
+            throw new TaskException("Task is not found");
+        }
+        Set<Notification> notifications = t.get().getNotifications();
+        return notifications.stream()
+                .map(this::mapToNotificationResponse)
+                .collect(Collectors.toList());
     }
 
     // Map Notification to NotificationResponse

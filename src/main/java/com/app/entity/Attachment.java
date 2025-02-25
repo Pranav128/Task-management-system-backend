@@ -1,5 +1,6 @@
 package com.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -29,6 +30,7 @@ public class Attachment {
     private LocalDateTime createdAt;
 
     // Relationships
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "task_id", nullable = false)
     private Task task; // The task to which this attachment belongs
