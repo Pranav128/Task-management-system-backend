@@ -58,6 +58,13 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
+    public List<CommentResponse> getCommentsByUserId(Long userId) {
+        List<Comment> comments = commentRepository.findByUserId(userId);
+        return comments.stream()
+                .map(this::mapToCommentResponse)
+                .collect(Collectors.toList());
+    }
+
     // Map Comment entity to CommentResponse DTO
     private CommentResponse mapToCommentResponse(Comment comment) {
         return new CommentResponse(
