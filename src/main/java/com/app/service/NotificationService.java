@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -66,7 +65,7 @@ public class NotificationService {
         if(t.isEmpty()){
             throw new TaskException("Task is not found");
         }
-        Set<Notification> notifications = t.get().getNotifications();
+        List<Notification> notifications = t.get().getNotifications();
         return notifications.stream()
                 .map(this::mapToNotificationResponse)
                 .collect(Collectors.toList());

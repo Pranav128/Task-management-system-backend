@@ -60,7 +60,7 @@ public class TaskService {
 
         for (String c : comments){
             Comment comment = new Comment();
-            comment.setComment(c);
+            comment.setComment(c+" #"+task.getTitle());
             comment.setTask(savedTask);
             comment.setUser(createdBy);
 
@@ -72,8 +72,10 @@ public class TaskService {
         savedTask=taskRepository.save(task);
 
         //Attachment
-        for(MultipartFile i : attachments){
-            attachmentService.uploadAttachment(savedTask.getId(),i);
+        if(attachments != null) {
+            for (MultipartFile i : attachments) {
+                attachmentService.uploadAttachment(savedTask.getId(), i);
+            }
         }
 
         // Trigger notification

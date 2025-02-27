@@ -39,7 +39,7 @@ public class CommentService {
 
         // Create the comment
         Comment comment = new Comment();
-        comment.setComment(request.getComment());
+        comment.setComment(request.getComment()+" #"+task.getTitle());
         comment.setTask(task);
         comment.setUser(user);
 

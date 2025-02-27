@@ -38,10 +38,15 @@ public class SecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.
-                authorizeHttpRequests(req->
-                        req.requestMatchers("/api/register", "/api/login","/api/auth/forgot-password", "/api/auth/reset-password")
+                 authorizeHttpRequests(req ->
+                        req.requestMatchers(
+                                        "/api/register", "/api/login",
+                                        "/api/auth/forgot-password", "/api/auth/reset-password",
+                                        "/swagger-resources/**",
+                                        "/webjars/**",
+                                        "/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html")
                                 .permitAll());
-        http.authorizeHttpRequests(req->req.anyRequest().authenticated());
+        http.authorizeHttpRequests(req -> req.anyRequest().authenticated());
         http.sessionManagement(session -> session.configure(http));
         http.cors(cors -> cors.configurationSource(corsConfigurationSource())); // Enable CORS
 
