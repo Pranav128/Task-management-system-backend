@@ -1,6 +1,7 @@
 package com.app.security;
 
 import com.app.service.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,6 +27,8 @@ public class SecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
 
+    @Value("${ALLOWED_ORIGINS}") // Inject from environment variable
+    private String allowedOrigins;
 
     private final JwtUtil jwtUtil;
 
@@ -69,8 +72,9 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+        System.out.println(allowedOrigins);
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200")); // Allow frontend URL
+        configuration.setAllowedOrigins(List.of("http://localhost:4200",allowedOrigins)); // Allow frontend URL
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allowed HTTP methods
         configuration.setAllowedHeaders(List.of("*")); // Allow all headers
         configuration.setAllowCredentials(true); // Allow cookies/auth tokens
