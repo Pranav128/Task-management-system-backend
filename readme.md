@@ -8,17 +8,32 @@
 
 This is the backend service for the Task Management System, built using **Spring Boot, Spring Security, Hibernate, and MySQL**. It provides a REST API for managing users, tasks, notifications, comments and attachments.
 
+--- 
+
+### 💻Live experience: https://taskmaster128.netlify.app
+### 🛫Consume Restful web-services: https://taskmaster-v1.onrender.com/api
+
+ <video width="100%" controls>
+  <source src="Media/auth.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<video width="100%" controls>
+  <source src="Media/task.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 ---
 ## Table of Contents
 
 - [Features](#-features)
-- [Screenshots](#-screenshots)
 - [Technologies Used](#-tech-stack)
 - [Setup Instructions](#-setup-instructions)
 - [API Documentation](#apis)
 - [Database Schema](#-database)
 - [Deploying the Application](#-deployment)
-- [Author & License](#-license)
+- [Screenshots](#-screenshots)
+- [License](#-license)
 ---
 
 ## **📌 Features**
@@ -29,10 +44,6 @@ This is the backend service for the Task Management System, built using **Spring
 - ✅ **Role-based Authorization** (`ADMIN` & `USER`)
 - ✅ **Pagination & Sorting** for Task Lists
 - ✅ **CORS Support** (Cross-Origin Requests)
-
----
-
-## **📌 Screenshots**
 
 ---
 
@@ -57,8 +68,7 @@ This is the backend service for the Task Management System, built using **Spring
 
 ### **1️⃣ Clone the Repository**
 ```bash
-git clone https://github.com/yourusername/task-management-backend.git
-cd task-management-backend
+https://github.com/Pranav128/Task-management-system-frontend.git
 ```
 
 ### **2️⃣ Configure MySQL Database**
@@ -109,7 +119,9 @@ This document outlines the available API endpoints for the application.
 
 
 ## **📌 Database**
-
+**ERR Diagram**
+![Home](Media/ERR%20diagram.png "ERR")
+![Home](Media/entities.png "ERR")
 --- 
 
 
@@ -131,15 +143,39 @@ docker run -p 8080:8080 task-management-backend
 ```
 --- 
 
-## **📌 Author**
-#### 👨‍💻 Developed by @Pranav_Pisal
-#### 📧 pranavpisal2528@gmail.com
-#### 🔗 LinkedIn Profile
 
---- 
+## **📌 Screenshots**
+
+1. **Home Page**
+   ![Home](Media/screenshots/home1.png "Home")
+2. **Signup Page**
+   ![Signup](Media/screenshots/signup.png "Signup")
+3. **Login Page**
+   ![Login](Media/screenshots/login.png "Login")
+4. **Dashboard Page**
+   ![Dashboard](Media/screenshots/dashboard.png "Dashboard")
+5. **Task List Page**
+   ![TaskList](Media/screenshots/taks-list.png "TaskList")
+6. **Task Details Page**
+   ![Task Details](Media/screenshots/taskDetails1.png "Task Details")
+   ![Task Details](Media/screenshots/taskDetails2.png "Task Details")
+7. **New Task Page**
+   ![Home](Media/screenshots/createTask1.png "New Task")
+   ![Home](Media/screenshots/createTask2.png "New Task")
+   ![Home](Media/screenshots/createTask3.png "New Task")
+8. **Profile Page**
+   ![Profile](Media/screenshots/profile1.png "Profile")
+   ![Profile](Media/screenshots/profile2.png "Profile")
+9. **Forgot-Password Page**
+   ![Forgot-Password](Media/screenshots/forgotPass.png "Forgot-Password")
+10. **Reset-Password Page**
+    ![Reset-Password](Media/screenshots/resetPass.png "Reset-Password")
+11. **Access-denied Page**
+    ![Access-denied](Media/screenshots/access-denied.png "Access-denied")
+
+---
 
 ## **📌 License**
-**This project is licensed under the MIT License. See the LICENSE file for details.**
+**This project is licensed under the MIT License. See the [LICENSE](/LICENSE) file for details.**
 
 --- 
-
